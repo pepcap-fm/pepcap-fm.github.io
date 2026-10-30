@@ -801,3 +801,76 @@ footer.f small {
   margin-top: 8px;
   color: var(--moma-orange);
 }
+
+/* Hero subtitle */
+.hero-subtitle {
+  font: italic 600 clamp(1.2rem, 2.1vw, 1.55rem)/1.4 var(--serif);
+  color: #ffffff;
+  border-left: 4px solid var(--moma-orange);
+  padding-left: 18px;
+  margin: 0 0 22px;
+  max-width: 42ch;
+}
+
+/* Sample deliverables — dark card inside the white AI section */
+.light-section .box.sample-docs {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+  border-top: 8px solid var(--moma-orange);
+  margin-top: 28px;
+}
+
+.light-section .box.sample-docs h3 {
+  color: #ffffff;
+}
+
+.light-section .box.sample-docs p {
+  color: #d4d4d4;
+}
+
+.sample-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 32px;
+  margin-top: 16px;
+}
+
+.sample-link {
+  display: inline-block;
+  font: 700 0.9rem var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--moma-orange);
+  text-decoration: none;
+  border-bottom: 2px solid var(--moma-orange);
+  padding-bottom: 2px;
+}
+
+.sample-link:hover {
+  opacity: 0.75;
+}
+
+/* 24-hour reply note above the form button */
+.reply-note {
+  margin: 0;
+  text-align: center;
+  font: 700 0.85rem var(--sans);
+  letter-spacing: 0.02em;
+  color: #383838;
+}
+
+/* Mobile nav fix — keep CONTACT button fully visible on ~390px screens */
+@media (max-width: 480px) {
+  .nav {
+    gap: 4px;
+  }
+  .nav a {
+    padding: 9px 9px;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+  }
+  .nav a.cta {
+    margin-left: 2px;
+  }
+}
