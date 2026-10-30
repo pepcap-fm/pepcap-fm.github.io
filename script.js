@@ -71,77 +71,38 @@
     });
   });
 
-  // 3. Schedule a Detailed Consult Call Form -> Sends directly to pepcc1500@gmail.com
+  // 3. Schedule a Detailed Consult Call Form -> real POST to FormSubmit (pepcc1500@gmail.com)
   var consultForm = document.getElementById('consult-form');
   var statusEl = document.getElementById('form-status');
   var submitBtn = document.getElementById('consult-submit');
 
   if (consultForm) {
-    consultForm.addEventListener('submit', function (e) {
-      e.preventDefault();
+    consultForm.addEventListener('submit', function () {
+      // Personalize the email subject, then let the browser do a native POST
+      // to https://formsubmit.co/pepcc1500@gmail.com (see the form action).
       var name = (document.getElementById('c-name').value || '').trim();
-      var email = (document.getElementById('c-email').value || '').trim();
       var city = (document.getElementById('c-city').value || '').trim();
-      var focus = (document.getElementById('c-focus').value || '').trim();
-      var time = (document.getElementById('c-time').value || '').trim() || 'Flexible';
-      var notes = (document.getElementById('c-notes').value || '').trim() || 'Looking forward to discussing our household operations.';
-
-      var subject = 'Schedule a Detailed Consult Call · ' + name + ' (' + city + ')';
-      var body =
-        'Hi Pep,\n\n' +
-        'I would like to schedule a 30-minute consult call.\n\n' +
-        '• Name: ' + name + '\n' +
-        '• Email: ' + email + '\n' +
-        '• City / Time Zone: ' + city + '\n' +
-        '• Primary Focus: ' + focus + '\n' +
-        '• Preferred Call Times: ' + time + '\n\n' +
-        'Household Overview:\n' +
-        notes + '\n\n' +
-        'Best regards,\n' +
-        name;
-
+      var subjectInput = consultForm.querySelector('input[name="_subject"]');
+      if (subjectInput && name) {
+        subjectInput.value =
+          'New 30-Minute Consult Call Request \u00b7 ' + name + (city ? ' (' + city + ')' : '');
+      }
       if (submitBtn) submitBtn.disabled = true;
       if (statusEl) statusEl.textContent = 'Sending request to Pep...';
-
-      fetch('https://formsubmit.co/ajax/pepcc1500@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          _subject: subject,
-          Name: name,
-          Email: email,
-          City_Time_Zone: city,
-          Primary_Focus: focus,
-          Preferred_Times: time,
-          Household_Overview: notes
-        })
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error('Network response was not ok');
-          return res.json();
-        })
-        .then(function () {
-          if (statusEl) {
-            statusEl.textContent = '✓ Request sent to pepcc1500@gmail.com. Pep will reply shortly.';
-          }
-          consultForm.reset();
-          if (submitBtn) submitBtn.disabled = false;
-        })
-        .catch(function () {
-          // Fallback to mailto if offline or blocked
-          if (statusEl) {
-            statusEl.textContent = 'Opening your email client to send directly to pepcc1500@gmail.com...';
-          }
-          if (submitBtn) submitBtn.disabled = false;
-          window.location.href =
-            'mailto:pepcc1500@gmail.com?subject=' +
-            encodeURIComponent(subject) +
-            '&body=' +
-            encodeURIComponent(body);
-        });
+      // No preventDefault: the native form POST is the real submission.
+      // FormSubmit redirects back to the site with ?sent=1 (see _next).
     });
+
+    // Confirmation after FormSubmit redirects back with ?sent=1
+    if (window.location.search.indexOf('sent=1') !== -1) {
+      if (statusEl) {
+        statusEl.textContent = '\u2713 Request sent. Pep will reply shortly.';
+      }
+      consultForm.reset();
+      if (submitBtn) submitBtn.disabled = false;
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.hash);
+      }
+    }
   }
 })();
