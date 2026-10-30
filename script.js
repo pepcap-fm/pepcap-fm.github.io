@@ -59,18 +59,6 @@
     });
   });
 
-  // Pre-select focus when clicking schedule link
-  var focusLinks = document.querySelectorAll('[data-select-focus]');
-  var focusSelect = document.getElementById('c-focus');
-  focusLinks.forEach(function (link) {
-    link.addEventListener('click', function () {
-      var val = link.getAttribute('data-select-focus');
-      if (focusSelect && val) {
-        focusSelect.value = val;
-      }
-    });
-  });
-
   // 3. Schedule a Detailed Consult Call Form -> real POST to FormSubmit (pepcc1500@gmail.com)
   var consultForm = document.getElementById('consult-form');
   var statusEl = document.getElementById('form-status');
@@ -81,11 +69,10 @@
       // Personalize the email subject, then let the browser do a native POST
       // to https://formsubmit.co/pepcc1500@gmail.com (see the form action).
       var name = (document.getElementById('c-name').value || '').trim();
-      var city = (document.getElementById('c-city').value || '').trim();
       var subjectInput = consultForm.querySelector('input[name="_subject"]');
       if (subjectInput && name) {
         subjectInput.value =
-          'New 30-Minute Consult Call Request \u00b7 ' + name + (city ? ' (' + city + ')' : '');
+          'New 30-Minute Consult Call Request \u00b7 ' + name;
       }
       if (submitBtn) submitBtn.disabled = true;
       if (statusEl) statusEl.textContent = 'Sending request to Pep...';
