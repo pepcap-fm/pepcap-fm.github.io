@@ -276,6 +276,15 @@ section {
   color: var(--moma-orange);
 }
 
+.quote .testimonial-label {
+  margin: 0 0 16px;
+  padding-left: 24px;
+  font: 700 0.9rem var(--sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--moma-orange);
+}
+
 /* Hero — Dark Background with Crisp White Checklist Card */
 .hero {
   display: grid;
