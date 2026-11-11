@@ -59,7 +59,7 @@
     });
   });
 
-  // 3. Schedule a Detailed Consult Call Form -> real POST to FormSubmit (pepcc1500@gmail.com)
+  // 3. Schedule a Detailed Consult Call Form -> real POST to FormSubmit (pepcap.fm@gmail.com)
   var consultForm = document.getElementById('consult-form');
   var statusEl = document.getElementById('form-status');
   var submitBtn = document.getElementById('consult-submit');
@@ -67,7 +67,7 @@
   if (consultForm) {
     consultForm.addEventListener('submit', function () {
       // Personalize the email subject, then let the browser do a native POST
-      // to https://formsubmit.co/pepcc1500@gmail.com (see the form action).
+      // to https://formsubmit.co/pepcap.fm@gmail.com (see the form action).
       var name = (document.getElementById('c-name').value || '').trim();
       var subjectInput = consultForm.querySelector('input[name="_subject"]');
       if (subjectInput && name) {
